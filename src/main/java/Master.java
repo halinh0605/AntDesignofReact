@@ -37,6 +37,11 @@ public class Master {
         waitForElement(optionSelect);
         optionXpath.click();
     }
+    protected String getRandomFromList(String list){
+        String temp[] = list.split(";");
+        Random ran = new Random();
+        return temp[ran.nextInt(temp.length)];
+    }
 
     void selecMultitList (String xpath, String value){
         webDriver.findElement(By.xpath(xpath)).click();
@@ -132,5 +137,7 @@ public class Master {
         waitForElement(optionStr);
         optionXpath.click();
     }
+
+
 
 }

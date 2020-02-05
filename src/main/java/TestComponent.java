@@ -14,9 +14,10 @@ public class TestComponent extends Master{
     @Test
     public void testSelect(){
         webDriver.get("https://ant.design/components/select/");
-        selectDropdown("//*[@id='components-select-demo-search']//div","Lucy");
-        String result = webDriver.findElement(By.xpath("//*[@id='components-select-demo-search']//div[@title='Lucy']")).getText();
-        assertEquals(result,"Lucy");
+        String xx= getRandomFromList("Lucy;Jack;Tom");
+        selectDropdown("//*[@id='components-select-demo-search']//div",xx);
+        String result = webDriver.findElement(By.xpath("//*[@id='components-select-demo-search']//div[@class='ant-select-selection-selected-value']")).getText();
+        assertEquals(result,xx);
     }
 
 //ant - TreeSelect
@@ -27,7 +28,6 @@ public class TestComponent extends Master{
         webDriver.findElement(By.xpath("//span[@class='ant-select-tree-title'][contains(.,'my leaf')]")).click();
         String result = webDriver.findElement(By.xpath("//span[@class='ant-select-selection__rendered'][contains(.,'my leaf')]")).getText();
         assertEquals(result,"my leaf");
-
     }
 
 //ant- Button
