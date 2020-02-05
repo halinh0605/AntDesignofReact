@@ -27,6 +27,7 @@ public class TestComponent extends Master{
         webDriver.findElement(By.xpath("//span[@class='ant-select-tree-title'][contains(.,'my leaf')]")).click();
         String result = webDriver.findElement(By.xpath("//span[@class='ant-select-selection__rendered'][contains(.,'my leaf')]")).getText();
         assertEquals(result,"my leaf");
+
     }
 
 //ant- Button
