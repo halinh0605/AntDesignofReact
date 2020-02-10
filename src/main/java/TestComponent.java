@@ -201,7 +201,6 @@ public class TestComponent extends Master {
     @Test
     public void testRate() {
         webDriver.get("https://ant.design/components/rate/");
-
     }
 
     //ant - Radio
