@@ -1,4 +1,5 @@
 import org.apache.commons.io.FileUtils;
+import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.rules.TestRule;
@@ -24,7 +25,8 @@ public class Master {
     @BeforeClass
     public static void setUpClass() {
         System.out.println("Master setup");
-        System.setProperty("webdriver.chrome.driver", "driver\\chromedriver.exe");
+//        System.setProperty("webdriver.chrome.whitelistedIps", "");
+        System.setProperty("webdriver.chrome.driver", "driver/chromedriver86");
 
         ChromeOptions chromeOptions = new ChromeOptions();
         chromeOptions.setHeadless(true);
@@ -33,19 +35,26 @@ public class Master {
         webDriver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
     }
 
+    @AfterClass
+    public static void afterClass() {
+        System.out.println("close chrome");
+        webDriver.close();
+        webDriver.quit();
+    }
+
     @Rule
     public TestRule watcher = new TestWatcher() {
         @Override
         protected void succeeded(Description description) {
             System.out.println("Pass!");
-            webDriver.close();
+
         }
 
         @Override
         protected void failed(Throwable e, Description description) {
             System.out.println("Fail!");
             takeScreenShot(description);
-            webDriver.close();
+
         }
     };
 
@@ -126,13 +135,13 @@ public class Master {
         optionXpath.click();
     }
 
-
     void waitForElement(String xpath) {
         WebDriverWait wait = new WebDriverWait(webDriver, 3);
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpath)));
     }
 
     void selectDropdown(String xpath, String value) {
+        waitForElement(xpath);
         webDriver.findElement(By.xpath(xpath)).click();
         String optionStr = String.format("//div[contains(@class,'ant-select-dropdown')]//ul[@role='listbox']//li[text()='%s']", value);
         WebElement optionXpath = webDriver.findElement(
@@ -204,6 +213,4 @@ public class Master {
         waitForElement(optionStr);
         optionXpath.click();
     }
-
-
 }
